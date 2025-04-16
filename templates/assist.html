@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voxis - Your Voice Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #121212;
+            color: #ffffff;
+            padding: 50px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #00ffd5;
+        }
+
+        input {
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            width: 300px;
+            background-color: #1f1f1f;
+            color: #ffffff;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 16px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #00ffd5;
+            color: #121212;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00e6bf;
+        }
+
+        #mic-button {
+            background-color: #ff4081;
+            color: white;
+            padding: 14px;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        #mic-button:hover {
+            background-color: #e0356d;
+        }
+
+        #response {
+            margin-top: 30px;
+            font-size: 18px;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 0 10px rgba(0, 255, 213, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h2>🎙️ Voxis - Your Voice Assistant</h2>
+
+    <input type="text" id="input" placeholder="Type or speak...">
+    <button onclick="askGroq()">Ask</button>
+    <button id="mic-button" onclick="startListening()">🎤</button>
+
+    <p id="response">Your response will appear here...</p>
+
+    <script>
+        function askGroq() {
+            const message = document.getElementById("input").value;
+            fetch("/ask-groq/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": getCookie('csrftoken')
+                },
+                body: "message=" + encodeURIComponent(message)
+            })
+            .then(res => res.json())
+            .then(data => {
+                const responseText = data.response;
+                document.getElementById("response").innerText = "🤖 " + responseText;
+
+                const utterance = new SpeechSynthesisUtterance(responseText);
+                utterance.lang = 'en-US';
+                speechSynthesis.speak(utterance);
+            });
+        }
+
+        function startListening() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById("input").value = transcript;
+                askGroq();
+            };
+
+            recognition.onerror = function(event) {
+                alert("Error with speech recognition: " + event.error);
+            };
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
