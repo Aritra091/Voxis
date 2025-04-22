@@ -6,24 +6,84 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #121212;
+            background: #0d0d0d;
             color: #ffffff;
-            padding: 50px;
-            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
         }
 
         h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-            color: #00ffd5;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        #response-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            height: 100%;
+            padding: 10px;
+        }
+
+        #response {
+            flex: 1;
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(36, 159, 215, 0.34);
+            overflow-y: auto;
+            max-height: 65vh;
+        }
+
+        .chat-bubble {
+            margin: 10px 0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .user {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+        }
+
+        .assistant {
+            background-color: #2a2a2a;
+            color: white;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         input {
-            padding: 12px;
+            padding: 12px 16px;
             font-size: 16px;
             border: none;
             border-radius: 8px;
-            width: 300px;
+            flex-grow: 1;
             background-color: #1f1f1f;
             color: #ffffff;
             outline: none;
@@ -32,56 +92,147 @@
         button {
             padding: 12px 16px;
             font-size: 16px;
-            margin: 10px;
             border: none;
             border-radius: 8px;
-            background-color: #00ffd5;
+            background-color:#00c6ff;
             color: #121212;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #00e6bf;
+            transform: translateY(-2px);
+            background-color:rgb(50, 114, 162);
+            box-shadow: 0 8px 20px rgb(50, 114, 162);
         }
 
         #mic-button {
             background-color: #ff4081;
-            color: white;
-            padding: 14px;
             border-radius: 50%;
+            padding: 14px;
             font-size: 18px;
+            color: white;
         }
 
         #mic-button:hover {
-            background-color: #e0356d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgb(150, 32, 71);
+            background-color:rgb(150, 32, 71);
         }
 
-        #response {
-            margin-top: 30px;
-            font-size: 18px;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 0 10px rgba(0, 255, 213, 0.2);
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .bottom-controls {
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
     <h2>🎙️ Voxis - Your Voice Assistant</h2>
 
-    <input type="text" id="input" placeholder="Type or speak...">
-    <button onclick="askGroq()">Ask</button>
-    <button id="mic-button" onclick="startListening()">🎤</button>
+    <div id="response-container">
+        <div id="response" class="chat-box">
+            <p placeholder="Start the conversation..."></p>
+        </div>
 
-    <p id="response">Your response will appear here...</p>
+        <div class="bottom-controls">
+            <div class="input-wrapper">
+                <input type="text" id="input" placeholder="Type or speak..." onkeydown="checkEnter(event)">
+                <button onclick="askGroq()">Ask</button>
+                <button id="mic-button" onclick="startListening()">🎤</button>
+            </div>
+            <div class="controls">
+                <button id="speak-button" onclick="speakLastResponse()">🔈 Speak</button>
+                <button id="stop-button" onclick="stopSpeaking()">🔇 Stop</button>
+                <button id="back-button" onclick="window.location.href='/home';">⬅️ Back</button>
+                    <button onclick="clearChat()">🧹 Clear Chat</button>
+                    <select id="language-select">
+                        <option value="en-US">English (US)</option>
+                        <option value="es-ES">Español (Spanish)</option>
+                        <option value="fr-FR">Français (French)</option>
+                        <option value="de-DE">Deutsch (German)</option>
+                        <option value="it-IT">Italiano (Italian)</option>
+                        <!-- Add more languages as needed -->
+                    </select>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <script>
+        let lastResponse = "";  // Holds the assistant's most recent reply
+        let currentUtterance = null;  // Reference to currently speaking utterance
+        
+
+
+        // Function to handle the language selection dynamically
+        function getSelectedLanguage() {
+            return document.getElementById("language-select").value;
+        }
+
+        
+        function speakLastResponse() {
+            const language = getSelectedLanguage();
+            if (lastResponse) {
+                if (speechSynthesis.speaking) {
+                    speechSynthesis.cancel();  // Cancel any ongoing speech first
+                }
+        
+                currentUtterance = new SpeechSynthesisUtterance(lastResponse);
+                currentUtterance.lang = language;
+                speechSynthesis.speak(currentUtterance);
+            }
+        }
+        
+        function stopSpeaking() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();  // Instantly stops any speech
+            }
+        }
+        
+
+
+
+
         function askGroq() {
             const message = document.getElementById("input").value;
+            const responseDiv = document.getElementById("response");
+            const language = getSelectedLanguage();  // Get the selected language
+
+            // Clear the input box after submitting
+            document.getElementById("input").value = '';
+        
+            // Display user input
+            const userMsgDiv = document.createElement("div");
+            userMsgDiv.classList.add("chat-bubble", "user");
+            userMsgDiv.textContent = message;
+            responseDiv.appendChild(userMsgDiv);
+        
+            // Scroll to bottom
+            responseDiv.scrollTop = responseDiv.scrollHeight;
+        
+            // Send message to server
             fetch("/ask-groq/", {
                 method: "POST",
                 headers: {
@@ -92,34 +243,85 @@
             })
             .then(res => res.json())
             .then(data => {
-                const responseText = data.response;
-                document.getElementById("response").innerText = "🤖 " + responseText;
-
-                const utterance = new SpeechSynthesisUtterance(responseText);
-                utterance.lang = 'en-US';
+                // Display assistant response with animation
+                const assistantMsgDiv = document.createElement("div");
+                assistantMsgDiv.classList.add("chat-bubble", "assistant");
+                responseDiv.appendChild(assistantMsgDiv);
+        
+                animateTypingEffect(assistantMsgDiv, data.response);
+        
+                // Scroll to bottom again
+                responseDiv.scrollTop = responseDiv.scrollHeight;
+        
+                // Speak the response
+                const utterance = new SpeechSynthesisUtterance(data.response);
+                utterance.lang = language;  // Set language from the selector
                 speechSynthesis.speak(utterance);
+        
+                // Store for speak button
+                lastResponse = data.response;
             });
         }
-
+        
+        
+        function animateTypingEffect(element, text, callback) {
+            let i = 0;
+            function typeChar() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeChar, 15); // Typing speed in ms
+                } else if (callback) {
+                    callback();
+                }
+            }
+            typeChar();
+        }
+        
+        
+    
         function startListening() {
             const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
             recognition.lang = 'en-US';
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
-
+    
             recognition.start();
-
+    
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript;
                 document.getElementById("input").value = transcript;
                 askGroq();
             };
-
+    
             recognition.onerror = function(event) {
                 alert("Error with speech recognition: " + event.error);
             };
         }
+    
+        function clearChat() {
+            // Clear the chat content from the UI
+            document.getElementById("response").innerHTML = "<p>Chat cleared. Start a new conversation!</p>";
+            
+            // Stop any ongoing speech
+            speechSynthesis.cancel(); 
+            
+            // Clear the input field
+            document.getElementById("input").value = "";
+            
+            // Optionally, clear sessionStorage and localStorage (if you're using them to store anything)
+            sessionStorage.clear(); // Clears sessionStorage
+            localStorage.clear();   // Clears localStorage
+        }
+        
 
+        
+        // On page load, cancel any speech that's ongoing
+            window.onload = function() {
+            speechSynthesis.cancel(); // Ensure no speech is playing after refresh
+        };
+        
+    
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -134,6 +336,15 @@
             }
             return cookieValue;
         }
+    
+        // 🔑 Listen for Enter key
+        document.getElementById("input").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                askGroq();
+            }
+        });
     </script>
+    
 </body>
 </html>
