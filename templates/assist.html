@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Voxis - Your Voice Assistant</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400;600&display=swap');
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0d0d0d;
@@ -161,7 +163,7 @@
             <div class="controls">
                 <button id="speak-button" onclick="speakLastResponse()">🔈 Speak</button>
                 <button id="stop-button" onclick="stopSpeaking()">🔇 Stop</button>
-                <button id="back-button" onclick="window.location.href='/home';">⬅️ Back</button>
+                <button id="back-button" onclick="window.location.href='/';">⬅️ Back</button>
                     <button onclick="clearChat()">🧹 Clear Chat</button>
                     <select id="language-select">
                         <option value="en-US">English (US)</option>

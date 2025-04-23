@@ -103,10 +103,18 @@ input::placeholder {
             <div class="mb-3">
                 <label class="form-label">Password</label>
                 {{ form.password1 }}
+                <small class="d-block text-start" style="color: white; opacity: 0.6;">
+                    Must be 8+ chars with uppercase, lowercase, number & special character.
+                </small>
+                
             </div>
             <div class="mb-3">
                 <label class="form-label">Confirm Password</label>
                 {{ form.password2 }}
+                <small class="d-block text-start" style="color: white; opacity: 0.6;">
+                    Enter the same password as above, for verification.
+                </small>
+                
             </div>
 
             <button type="submit" class="btn btn-primary w-100 fw-bold">Sign Up</button>

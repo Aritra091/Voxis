@@ -17,7 +17,7 @@ from django.contrib.auth import logout
 from django.contrib.auth import update_session_auth_hash
 
 from django.conf import settings
-# from django.shortcuts import render
+# from django.shortcuts import renderz
 from gtts import gTTS
 
 

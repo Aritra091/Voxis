@@ -301,6 +301,7 @@
 
 .testimonial-cards {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   gap: 2rem;
   margin-top: 2rem;
@@ -311,15 +312,30 @@
   padding: 1.5rem;
   border-radius: 10px;
   width: 30%;
+  min-width: 250px; /* Prevents it from shrinking too much */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: left;
 }
 
 .testimonial-card:hover {
   transform: translateY(-10px);
 }
 
-.testimonial-card p {
+.testimonial-card p {.testimonial-card {
+  background: #262626;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 30%;
+  min-width: 250px; /* Prevents it from shrinking too much */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: left;
+}
   font-size: 1rem;
   color: #ccc;
 }
@@ -556,32 +572,52 @@ a {
 
 
 
-  <!-- From Uiverse.io by Pravins01 --> 
+  <!-- Unique --> 
   <div class="card-wrapper">
     <div class="card">
-      <p class="heading" >Popular this month</p>
-      <p>Powered By</p>
-      <p>Uiverse</p>
+      <p class="heading" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; text-align: center;">Popular this month</p>
+      <p style="font-size: 1rem; text-align: center;">Trending features and updates this month include:</p>
+      <ul style=" text-align: center;list-style-type: none; padding-left: 0; font-size: 0.8rem; margin-top: 1rem;">
+          <li>- Enhanced voice command accuracy</li>
+          <li>- Added support for new languages</li>
+          <li>- Improved user interface design</li>
+      </ul>
 
     </div>
   
     <div class="card">
-      <p class="heading">Languages Supported</p>
-      <p>Up to 100+</p>
-      <p>Real-Time</p>
+      <p class="heading" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem;  text-align: center; ">Languages Supported</p>
+    <p style="font-size: 1rem; text-align: center;">Voxis supports multiple languages, including:</p>
+    <ul style=" text-align: center;list-style-type: none; padding-left: 0; font-size: 0.8rem; margin-top: 0.5rem;">
+      <li>- English</li>
+      <li>- Spanish</li>
+      <li>- French</li>
+      <li>- German</li>
+      <li>- And many more...</li>
+    </ul>
     </div>
   
     <div class="card">
-      <p class="heading">Input Types</p>
-      <p>Voice, Image, Text</p>
-      <p>Multimodal AI</p>
+      <p class="heading" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; text-align: center;">Input Types</p>
+    <p style="font-size: 1rem; text-align: center;">Voxis allows multiple types of inputs for better interaction:</p>
+    <ul style=" text-align: center;list-style-type: none; padding-left: 0; font-size: 0.8rem; margin-top: 1rem;">
+      <li>- Voice Input for hands-free commands</li>
+      <li>- Image Input for object detection</li>
+      <li>- Text Input for manual queries</li>
+    </ul>
     </div>
   </div>
 
 
+
+
+
+ 
+
+
   
 <!-- About Section -->
-<section class="about-section fade-in">
+<section class="about-section fade-in" id="about">
   <div class="about-container">
     <div class="heading-container">
       <h2 class="highlight-heading">About Voxis</h2>
@@ -643,6 +679,16 @@ a {
         <h3 style="font-size: 1.6rem; font-weight: bold; color: #ffffff; margin-bottom: 1rem;">Is Voxis available on all devices?</h3>
         <p style="font-size: 1rem; color: #cfcfcf;">Voxis is available on most modern devices, including smartphones, desktops, and smart home devices.</p>
       </div>
+      <div class="faq-item">
+        <h3 style="font-size: 1.6rem; font-weight: bold; color: #ffffff; margin-bottom: 1rem;">What is the new Text-to-Speech feature?</h3>
+        <p style="font-size: 1rem; color: #cfcfcf;">We recently added a Text-to-Speech converter using GTTS (Google Text-to-Speech), which allows you to convert text into speech in real time. Simply type your message, and the assistant will read it out loud!</p>
+    </div>
+    <div class="faq-item">
+      <h3 style="font-size: 1.6rem; font-weight: bold; color: #ffffff; margin-bottom: 1rem;">How does the Text-to-Speech feature work?</h3>
+      <p style="font-size: 1rem; color: #cfcfcf;">Our Text-to-Speech feature uses the GTTS (Google Text-to-Speech) engine to read out the text you enter. It’s designed to work seamlessly across different devices, offering a natural-sounding voice for your assistant's responses.</p>
+  </div>
+  
+    
     </div>
   </div>
 </section>
@@ -661,15 +707,18 @@ a {
     <div class="testimonial-cards">
       <div class="testimonial-card">
         <p>"Voxis is an absolute game-changer! It made communication in multiple languages so easy and seamless."</p>
-        <p>- User 1</p>
+        <p style="color: gold; font-size: 1.2rem;">★★★★★</p>
+        <p>- Arghyadeep Patra</p>
       </div>
       <div class="testimonial-card">
         <p>"The real-time features are incredible. I’ve never experienced an AI assistant as versatile as Voxis."</p>
-        <p>- User 2</p>
+        <p style="color: gold; font-size: 1.2rem;">★★★★⯨</p>
+        <p>- Ahana Sen</p>
       </div>
       <div class="testimonial-card">
         <p>"Absolutely love the multilingual support. Voxis has revolutionized my work and communication."</p>
-        <p>- User 3</p>
+        <p style="color: gold; font-size: 1.2rem;">★★★★☆</p>
+        <p>- Arghajyoti Sarkar</p>
       </div>
     </div>
   </div>
@@ -687,7 +736,7 @@ a {
         <a href="https://www.linkedin.com/in/aritra-chattopadhyay-5198492a4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
           <div class="card developer-card">
             <div class="profile-img-wrapper">
-              <img src="{% static 'aritra.jpeg' %}" alt="Swastik Sen" class="profile-img">
+              <img  src="{% static 'aritra.jpeg' %}" alt="Aritra " class="profile-img">
             </div>
             <p class="heading">Aritra Chattopadhyay</p>
             <p>AI Integration & Back-End</p>
@@ -699,8 +748,8 @@ a {
       <div>
         <a href="https://www.linkedin.com/in/arghya-chakraborty-61b151276?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
           <div class="card developer-card">
-            <div class="profile-img-wrapper">
-              <img src="{% static 'arghya.jpeg' %}" alt="Aritra" class="profile-img">
+            <div class="profile-img-wrapper" >
+              <img src="{% static 'arghya.jpeg' %}" alt="Arghya" class="profile-img">
             </div>
             <p class="heading">Arghya Chakraborty</p>
             <p>Back-End & UI/UX</p>
@@ -719,7 +768,7 @@ a {
 
 <!-- contact -->
 
-<section class="contact-section fade-in" style="padding: 4rem 2rem; background: #1a1a1a; color: #fff;">
+<section class="contact-section fade-in" style="padding: 4rem 2rem; background: #1a1a1a; color: #fff;" id="contact">
   <div class="about-container">
     <h2 style="text-align: center; font-size: 2.5rem; font-weight: bold; color: #e0e0e0; margin-bottom: 1rem; border-bottom: 2px solid #00bcd4; display: inline-block;">
       Contact Us
