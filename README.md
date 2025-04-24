@@ -1,7 +1,3 @@
-Sure! Here's your **README** with all the **headings bolded** for better emphasis and clarity:
-
----
-
 # **🚀 VOXIS – The Multilingual AI Assistant**  
 An intelligent assistant that understands and responds to **text, voice, and images** in multiple languages, powered by Groq for ultra-low-latency AI inference.
 
