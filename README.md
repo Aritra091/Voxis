@@ -76,7 +76,8 @@ Its goal is to **bridge digital and human communication across languages and for
 - gTTS  
 - Render for deployment
 
-**Local Setup:**
+## **Local Setup:**
+```bash
 # Clone the repo
 git clone https://github.com/your-team/project-name
 
@@ -86,6 +87,7 @@ npm install
 
 # Start development server
 npm run dev
+```
 
 Ensure Groq API key is set in `.env` file for production-level inference.
 
