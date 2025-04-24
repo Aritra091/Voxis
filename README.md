@@ -77,7 +77,15 @@ Its goal is to **bridge digital and human communication across languages and for
 - Render for deployment
 
 **Local Setup:**
-![Screenshot 2025-04-24 153745](https://github.com/user-attachments/assets/f116b740-8a66-478e-88ce-62e6716743d4)
+# Clone the repo
+git clone https://github.com/your-team/project-name
+
+# Install dependencies
+cd project-name
+npm install
+
+# Start development server
+npm run dev
 
 Ensure Groq API key is set in `.env` file for production-level inference.
 
