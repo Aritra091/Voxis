@@ -79,14 +79,18 @@ Its goal is to **bridge digital and human communication across languages and for
 ## **Local Setup:**
 ```bash
 # Clone the repo
-git clone https://github.com/your-team/project-name
+git clone https://github.com/Aritra091/Voxis.git
 
-# Install dependencies
-cd project-name
-npm install
+# Navigate to project
+cd Voxis
 
-# Start development server
-npm run dev
+# Setup virtual environment & install dependencies
+python -m venv venv
+source venv/bin/activate  # or venve\Scripts\activate on Windows
+pip install -r requirements.txt
+
+# Run server
+python manage.py runserver
 ```
 
 Ensure Groq API key is set in `.env` file for production-level inference.
