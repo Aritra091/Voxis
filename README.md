@@ -57,8 +57,8 @@ Its goal is to **bridge digital and human communication across languages and for
 ---
 
 ## **📽️ Demo & Deliverables**  
-- **Demo Video Link:** _[Add YouTube/Loom link here]_  
-- **Pitch Deck / PPT Link:** _[Add Google Slides/PDF link here]_
+- **Demo Video Link:** _[https://youtu.be/QAWgvS6rgq8]_  
+- **Pitch Deck / PPT Link:** _[https://drive.google.com/drive/folders/13rUVVDJEhVnJXZWs-xYFrVIP9QqtOSIp?usp=sharing]_
 
 ---
 
