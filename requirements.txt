@@ -1,4 +1,4 @@
-gunicorn==21.2.0
+gunicorn==23.0.0
 
 aiofiles==24.1.0
 annotated-types==0.7.0
